@@ -1,0 +1,14 @@
+.container1{
+    outline: 20px black;
+    border-radius: 10px;
+}
+.card{
+    box-shadow: 7px 7px 20px 15px #000000;
+    border-radius: 10px;
+    background-color:rgb(153, 186, 202);
+}
+button:hover{
+    transform: scale(1.2);
+    background-color: beige;
+    outline: 2px solid #7c329f;
+}
