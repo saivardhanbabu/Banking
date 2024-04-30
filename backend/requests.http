@@ -1,0 +1,41 @@
+post http://localhost:4000/user-api/user-add-balance
+Content-Type: application/json
+
+{
+    "acc":1,
+    "amount":100,
+    "username": "saivardhan"
+}
+###
+post http://localhost:4000/user-api/user-add-balance
+Content-Type: application/json
+
+{
+    "amount":100,
+    "accountNo":"123456",
+    "username":"krishna"
+}
+###
+get http://localhost:4000/user-api/user-balance/krishna/123456
+###
+post http://localhost:4000/user-api/transfer
+Content-Type: application/json
+
+{
+    "acc":1,
+    "amount":100,
+    "username": "saivardhan",
+    "ifsc":"SBI101"
+}
+###
+get http://localhost:4000/user-api/transfer/saivardhanbabu
+###
+post http://localhost:4000/user-api/verify/krishna/123456
+Content-Type: application/json
+
+{
+    "username":"saivardhanbabu",
+    "accountNo":"123456"
+}
+###
+get http://localhost:4000/user-api/transfer/saivardhan
