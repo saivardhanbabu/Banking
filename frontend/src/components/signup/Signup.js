@@ -43,11 +43,9 @@ function Signup() {
               <form onSubmit={handleSubmit(onSignUpFormSubmit)}>
               {err.length!==0&&<p className="text-danger text-center">{err}</p>}
                 <div className="mb-4">
-                  <label htmlFor="username" className="form-label">
-                    Username
-                  </label>
                   <input
                     type="text"
+                    placeholder="Username"
                     className="form-control"
                     id="username"
                     {...register("username", { required: true, minLength: 4, maxLength: 20 })}
@@ -57,11 +55,9 @@ function Signup() {
                   {errors.username && errors.username.type === "maxLength" && <p className="text-danger">Username cannot exceed 20 characters.</p>}
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="password" className="form-label">
-                    Password
-                  </label>
                   <input
                     type="password"
+                    placeholder="Password"
                     className="form-control"
                     id="password"
                     {...register("password", { required: true, minLength: 6, maxLength: 20 })}
@@ -71,16 +67,15 @@ function Signup() {
                   {errors.password && errors.password.type === "maxLength" && <p className="text-danger">Password cannot exceed 20 characters.</p>}
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="email" className="form-label">
-                    Account No:
-                  </label>
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="Account No"
                     id="email"
-                    {...register("accountNo", { required: true })}
+                    {...register("accountNo", { required: true,minLength: 6, maxLength: 20 })}
                   />
-                  {errors.accountNo && <p className="text-danger">Email is required.</p>}
+                  {errors.accountNo && <p className="text-danger">Account No is required.</p>}
+                  {errors.accountNo && errors.accountNo.type === "minLength" && <p className="text-danger">Account must be 10 digits.</p>}
                 </div>
 
                 <div className="text-end">

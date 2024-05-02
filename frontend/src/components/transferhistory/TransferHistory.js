@@ -19,7 +19,7 @@ function TransferHistory() {
   }, []);
   return (
     <div>
-        {transfer.length === 0 ? (
+        {transfer.length===0 &&details.length === 0 ? (
         <p
           className="display-1  text-center"
           style={{ color: "var(--crimson)" }}

@@ -40,24 +40,11 @@ function Login() {
                 </p>
               )}
               <form onSubmit={handleSubmit(onSignUpFormSubmit)}>
-              <div className="mb-4">
-                  <label htmlFor="username" className="form-label">
-                    Account No:
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="username"
-                    {...register("accountNo", { required: true, minLength: 4, maxLength: 20 })}
-                  />
-                </div>
                 <div className="mb-4">
-                  <label htmlFor="username" className="form-label">
-                    Username
-                  </label>
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="Username"
                     id="username"
                     {...register("username", { required: true, minLength: 4, maxLength: 20 })}
                   />
@@ -66,12 +53,10 @@ function Login() {
                   {errors.username && errors.username.type === "maxLength" && <p className="text-danger">Username cannot exceed 20 characters.</p>}
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="password" className="form-label">
-                    Password
-                  </label>
                   <input
                     type="password"
                     className="form-control"
+                    placeholder="Password"
                     id="password"
                     {...register("password", { required: true, minLength: 4, maxLength: 20 })}
                   />
@@ -79,7 +64,17 @@ function Login() {
                   {errors.password && errors.password.type === "minLength" && <p className="text-danger">Password must be at least 4 characters long.</p>}
                   {errors.password && errors.password.type === "maxLength" && <p className="text-danger">Password cannot exceed 20 characters.</p>}
                 </div>
-
+                <div className="mb-4">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="username"
+                    placeholder="Account No"
+                    {...register("accountNo", { required: true, minLength: 10, maxLength: 10 })}
+                  />
+                   {errors.accountNo && <p className="text-danger">Account No is required.</p>}
+                  {errors.accountNo && errors.accountNo.type === "minLength" && <p className="text-danger">Account must be 10 digits.</p>}
+                </div>
                 <div className="text-end">
                   <button
                     type="submit"

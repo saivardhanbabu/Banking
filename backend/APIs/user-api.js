@@ -1,12 +1,9 @@
-//create mini-express app
 const exp=require('express')
 const userApp=exp.Router()
 const bcryptjs=require('bcryptjs')
 const jwt=require('jsonwebtoken')
-// const {createUserOrAuthor,userOrAuthorLogin}=require('./Util')
 const expressAsynHandler=require('express-async-handler')
 const expressAsyncHandler = require('express-async-handler')
-// const verifyToken=require('../Middlewares/verifyToken')
 let usersCollection;
 let usersBalance;
 let usersTransfer
@@ -17,39 +14,27 @@ userApp.use((req,res,next)=>{
     next()
 })
 
-//define routes
-//user creation
-// userApp.post('/user',expressAsynHandler(createUserOrAuthor))
 userApp.post('/user',expressAsyncHandler(async(req,res)=>{
     const usersCollectionObj = req.app.get("usersCollection");
 
-  //get user or autrhor
   const user = req.body;
 
-  //check duplicate user
-    //find user by usersname
+
     let dbuser = await usersCollectionObj.findOne({ username: user.username});
     let dbuser1=await usersCollectionObj.findOne({accountNo:user.accountNo})
-    //if user existed
     if (dbuser !== null || dbuser1!==null) {
      return res.send({ message: "User already existed" });
     }
 
-  //hash password
     const hashedPassword=await bcryptjs.hash(user.password,7)
-    //replace plain pw with hashed pw
     user.password=hashedPassword;
 
-    //save user
         await usersCollectionObj.insertOne(user)
         res.send({message:"User created"})
 }))
 userApp.post('/verify',expressAsynHandler(async(req,res)=>{
     const usersBalanceObj = req.app.get("usersBalance");
-  //get user or autrhor
   let userCred=req.body
-  //const userCred = req.body;
-  //verifuy username of user
     let dbuser=await usersBalanceObj.findOne({username:userCred.usernameTo,accountNo:userCred.accountNo})
     console.log(dbuser)
     if(dbuser===null){
@@ -62,23 +47,17 @@ userApp.post('/verify',expressAsynHandler(async(req,res)=>{
 userApp.post('/verify/transfer',expressAsynHandler(async(req,res)=>{
     const usersBalanceObj = req.app.get("usersBalance");
   let userCred=req.body
-  //const userCred = req.body;
-  //verifuy username of user
     let dbuser=await usersBalanceObj.findOne({username:userCred.usernameTo,accountNo:userCred.accountTo})
-    console.log(dbuser)
     if(dbuser===null){
-        return res.send({message:"Amount Not Transferred"})
+        return res.send({message:"Amount Not Transferred Please Check the Details Entered"})
     }
     else{
         return res.send({message:"Verified"})
     }
 }))
-//user login
 userApp.post('/login',expressAsynHandler(async(req,res)=>{
     const usersCollectionObj = req.app.get("usersCollection");
-  //get user or autrhor
   const userCred = req.body;
-  //verifuy username of user
     let dbuser=await usersCollectionObj.findOne({username:userCred.username,accountNo:userCred.accountNo})
     if(dbuser===null ){
         return res.send({message:"Invalid username/account no"})
@@ -96,12 +75,6 @@ userApp.post('/login',expressAsynHandler(async(req,res)=>{
         }
     }
 }))
-// userApp.put('/user-add-balance',expressAsynHandler(async(req,res)=>{
-//     const amt=req.body
-//     const usersBalanceObj = req.app.get("usersBalance");
-//     await usersBalanceObj.updateOne({acc:1},{$set:{amount:amt.amount}})
-//     res.send({message:"Amount Added",payload:amt})
-// }))
 userApp.post('/user-add-balance',expressAsynHandler(async(req,res)=>{
     const amt=req.body
     const usersBalanceObj = req.app.get("usersBalance");
@@ -120,15 +93,6 @@ userApp.post('/user-add-balance/first',expressAsynHandler(async(req,res)=>{
     let res2=await usersBalanceObj.insertOne(amt)
     res.send({message:"Added"})
 }))
-// userApp.get('/user-balance/:username/:accountNo/get',expressAsynHandler(async(req,res)=>{
-//     const amt=req.body
-//     const user=(req.params.username)
-//     const acc=req.params.accountNo
-//     const usersBalanceObj = req.app.get("usersBalance");
-//     let result = await usersBalanceObj.find({username:user,accountNo:acc}).toArray()
-//     console.log(result)
-//     res.send({message:"Amount",payload:result.balance})
-// }))
 userApp.get('/user-balance/:username/:accountNo',expressAsynHandler(async(req,res)=>{
     const amt=req.body
     const user=(req.params.username)
@@ -138,12 +102,6 @@ userApp.get('/user-balance/:username/:accountNo',expressAsynHandler(async(req,re
     console.log(result)
     res.send({message:"Amount",payload:result})
 }))
-// userApp.post('/transfer',expressAsynHandler(async(req,res)=>{
-//     const transferObj=req.body
-//     const usersTransferObj = req.app.get("usersTransfer");
-//     await usersTransferObj.insertOne(transferObj)
-//     res.send({message:"transfer success"})
-// }))
 userApp.post('/transfer',expressAsynHandler(async(req,res)=>{
     const transferObj=req.body
     const usersTransferObj=req.app.get("usersTransfer")
@@ -180,29 +138,4 @@ userApp.get('/transfer/:username/get',expressAsynHandler(async(req,res)=>{
     res.send({message:"Transfer Fetch",payload:res2})
     }
 ))
-// read articles of all authors
-// userApp.get('/articles',verifyToken,expressAsynHandler(async(req,res)=>{
-//     //get all articles of all authors
-//     const articlesList=await articlesCollection.find({status:true}).toArray()
-//     res.send({message:"All articles",payload:articlesList})
-
-// }))
-
-
-// //write comment for an article by its artioclesID
-// userApp.post('/comment/:articleId',expressAsynHandler(async(req,res)=>{
-
-//         //get articleId from url
-//        const articleIdFromURL=(+req.params.articleId);
-//         //get comment obj from req
-//         const userComment=req.body;
-//         console.log(userComment)
-//         //add usercomment obj as an element to comments array of article document
-//         await articlesCollection.updateOne({articleId:articleIdFromURL},{$addToSet:{comments:userComment}})
-//         //send res
-//         res.send({message:"User comment added"})
-
-// }))
-
-//export userApp
 module.exports=userApp;

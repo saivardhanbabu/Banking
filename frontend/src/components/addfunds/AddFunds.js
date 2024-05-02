@@ -23,7 +23,6 @@ async function onSignUpFormSubmit(userCred){
   let result= await axios.get(`http://localhost:4000/user-api/user-balance/${currentUser.username}/${currentUser.accountNo}`)
   console.log(result.data.payload)
   let res=await axios.post('http://localhost:4000/user-api/user-add-balance',userCred)
-  console.log(res.data.message)
   navigate(`../dashboard/${currentUser.username}`)
   }
   }
@@ -42,37 +41,34 @@ async function onSignUpFormSubmit(userCred){
             <form onSubmit={handleSubmit(onSignUpFormSubmit)}>
             {err.length!==0&&<p className="text-danger text-center">{err}</p>}
             <div className="mb-4">
-                <label className="form-label">
-                  Enter username
-                </label>
                 <input
                   type="text"
                   className="form-control"
+                  placeholder="Username"
                   id="account"
                   {...register("usernameTo", { required: true })}
                 />
+                {errors.usernameTo && errors.usernameTo.type === "required" && <p className="text-danger">Username is required.</p>}
               </div>
               <div className="mb-4">
-                <label className="form-label">
-                  Enter acc
-                </label>
                 <input
                   type="text"
                   className="form-control"
+                  placeholder="Account No"
                   id="account"
                   {...register("accountNo", { required: true })}
                 />
+                {errors.accountNo && errors.accountNo.type === "required" && <p className="text-danger">Account No is required.</p>}
               </div>
               <div className="mb-4">
-                <label className="form-label">
-                  Enter amount
-                </label>
                 <input
                   type="number"
+                  placeholder="Enter Amount"
                   className="form-control"
                   id="amount"
                   {...register("amount", { required: true })}
                 />
+                {errors.amount && errors.amount.type === "required" && <p className="text-danger">Amount is required.</p>}
               </div>
 
               <div className="text-end">
@@ -81,7 +77,7 @@ async function onSignUpFormSubmit(userCred){
                   className="text-light"
                   style={{ backgroundColor: "maroon" }}
                 >
-                  Add
+                  Add Funds
                 </button>
               </div>
             </form>

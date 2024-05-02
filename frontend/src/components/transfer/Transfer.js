@@ -39,7 +39,7 @@ function Transfer() {
     try{
     let flag=await axios.post('http://localhost:4000/user-api/verify/transfer',userCred)
     console.log(flag.data.message)
-    if(flag.data.message==="Amount Not Transferred"){
+    if(flag.data.message==="Amount Not Transferred Please Check the Details Entered"){
       setErr(flag.data.message)
     }
     else if(flag.data.message==="Verified"){
@@ -73,59 +73,44 @@ function Transfer() {
             <form onSubmit={handleSubmit(onSignUpFormSubmit)}>
             {err.length!==0&&<p className="text-danger text-center">{err}</p>}
             <div className="mb-4">
-                <label className="form-label">
-                  Enter username
-                </label>
                 <input
                   type="text"
                   className="form-control"
+                  placeholder="Beneficiary Username"
                   id="account"
                   {...register("usernameTo", { required: true })}
                 />
+                {errors.usernameTo && errors.usernameTo.type === "required" && <p className="text-danger">Beneficiary Username is required</p>}
               </div>
               <div className="mb-4">
-                <label className="form-label">
-                  From acc
-                </label>
                 <input
                   type="text"
                   className="form-control"
+                  placeholder='From Acc No'
                   id="account"
                   {...register("accountFrom", { required: true })}
                 />
+                {errors.accountFrom && errors.accountFrom.type === "required" && <p className="text-danger">Account No is required.</p>}
               </div>
               <div className="mb-4">
-                <label className="form-label">
-                  Enter acc
-                </label>
                 <input
                   type="text"
                   className="form-control"
+                  placeholder='Beneficiary Acc No'
                   id="account"
                   {...register("accountTo", { required: true })}
                 />
+                {errors.accountTo && errors.accountTo.type === "required" && <p className="text-danger">Beneficiary Account No is required.</p>}
               </div>
               <div className="mb-4">
-                <label className="form-label">
-                  Enter amount
-                </label>
                 <input
                   type="text"
                   className="form-control"
+                  placeholder='Amount'
                   id="amount"
                   {...register("amount", { required: true })}
                 />
-              </div>
-              <div className="mb-4">
-                <label className="form-label">
-                  Enter IFSC code
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="account"
-                  {...register("ifsc", { required: true })}
-                />
+                {errors.amount && errors.amount.type === "required" && <p className="text-danger">Amount is required.</p>}
               </div>
               <div className="text-end">
                 <button
@@ -133,7 +118,7 @@ function Transfer() {
                   className="text-light"
                   style={{ backgroundColor: "maroon" }}
                 >
-                  Register
+                  Transfer Funds
                 </button>
               </div>
             </form>
