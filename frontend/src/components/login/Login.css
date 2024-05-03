@@ -12,3 +12,6 @@ button:hover{
     background-color: beige;
     outline: 2px solid #7c329f;
 }
+form{
+    padding:15px;
+}
