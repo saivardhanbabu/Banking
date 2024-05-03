@@ -45,11 +45,14 @@ function DashBoard() {
       <p className='lead fs-3 mt-3 text-primary'><b>Total Balance: </b>{
         balance.map((bal)=>
         <div className='text-primary' key={bal._id}>
+          <div style={{color:'maroon'}}>
           <b>{bal.balance}</b>
-          <br></br>
+          </div>
           <b>Username: {bal.username}</b>
           <br></br>
+          <div style={{color:'maroon'}}>
           <b>Account No: {bal.accountNo}</b>
+          </div>
         </div>
   
         )

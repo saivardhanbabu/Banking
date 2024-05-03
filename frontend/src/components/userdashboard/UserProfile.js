@@ -9,7 +9,7 @@ function UserProfile() {
 
  
   return (
-    <div className="user-profile p-3 container-fluid">
+    <div className="user-profile container-fluid">
       <ul className="nav  justify-content-around fs-3">
       <li className="nav-item">
           <NavLink
